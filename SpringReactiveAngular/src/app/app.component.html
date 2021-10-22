@@ -1,0 +1,30 @@
+<html>
+
+<body>
+
+<br>
+
+    <table title="Streaming Data" border="2">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>PinCode</th>
+            <th>Mobile Number</th>
+            <th>EmailId</th>
+        </tr>
+        <tr *ngFor="let person of persons">
+            <td>{{person._id}}</td>
+            <td>{{person.name}}</td>
+            <td>{{person.city}}</td>
+            <td>{{person.pinCode}}</td>
+            <td>{{person.mobileNumber}}</td>
+            <td>{{person.emailId}}</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
+
+<router-outlet></router-outlet>
