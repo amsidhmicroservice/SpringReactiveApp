@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Person } from "./model/person";
-import { PersonServiceService } from "./services/person-service.service";
 import { PersonEvent } from "./model/person-event";
-import { map, take } from "rxjs/operators";
+import { PersonServiceService } from "./services/person-service.service";
 
 @Component({
   selector: 'app-root',
@@ -14,21 +14,30 @@ export class AppComponent {
 
   persons: Person[] = []
   personEvent!: PersonEvent;
-  readonly personEventUrl: string = "http://localhost:8282/persons/1/events";
-  readonly personUrl: string = "http://localhost:8282/persons";
-  readonly personStreamUrl1: string = "http://localhost:8282/persons/stream1";
-  readonly personStreamUrl2: string = "http://localhost:8282/persons/stream2";
+  environmentName = environment.environmentName;
+  apiBackEndUrl = environment.apiBackEndUrl;
+
+  readonly personEventUrl: string = this.apiBackEndUrl + "/persons/1/events";
+  readonly personUrl: string = this.apiBackEndUrl + "/persons";
+  readonly personStreamUrl1: string = this.apiBackEndUrl + "/persons/stream1";
+  readonly personStreamUrl2: string = this.apiBackEndUrl + "/persons/stream2";
+  
 
   constructor(private personServiceService: PersonServiceService, private cdr: ChangeDetectorRef) {
+    
   }
 
   ngOnInit(): void {
+
+    console.log("Environment Name is " + this.environmentName);
+    console.log("BackEnd API is is " + this.apiBackEndUrl);
+
     //this.getPersonList();
-      this.observePersons1();
+    this.observePersons1();
     //this.observePersons2();
 
     //this.getPersonEvent();
-    
+
   }
 
   getPersonList() {

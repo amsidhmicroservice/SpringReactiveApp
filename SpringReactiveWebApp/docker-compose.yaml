@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  springreactivewebapp-service:
+    container_name: springreactivewebapp
+    image: amsidhmicroservice/springreactivewebapp:latest
+    ports:
+      - "8282:8282"
+    restart: always
+    networks:
+      - spring-reactive-network
+networks:
+  spring-reactive-network:
+    external: true

@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  environmentName: (window as any)["env"]["environmentName"] || "Amsidh Dev Environment",
+  apiBackEndUrl: (window as any)["env"]["apiBackEndUrl"] || "default",
+  debug: (window as any)["env"]["debug"] || false
 };
 
 /*
