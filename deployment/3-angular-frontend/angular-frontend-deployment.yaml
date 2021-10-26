@@ -1,0 +1,41 @@
+####################################################
+#  SpringReactiveAngular Deployment
+####################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-frontend-deployment
+  labels:
+    app.kubernetes.io/name: angular-frontend
+    app.kubernetes.io/component: angular
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: angular-frontend
+      app.kubernetes.io/component: angular
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: angular-frontend
+        app.kubernetes.io/component: angular
+    spec:
+      containers:
+      - name: angular-frontend
+        image: amsidhmicroservice/springreactiveangular:latest
+        imagePullPolicy: Always
+        env:
+          - name: ENVIRONMENT_NAME
+            value: Google Cloud GKE
+          - name: API_BACKEND_URL
+            #value: http://spring-backend-service:8282 # Backend with service-name as hostname is not working in angular application
+            value: http://146.148.44.150:8282  # Give here LoadBalancer IP address of backend API
+          - name: DEBUG
+            value: "false"
+        ports:
+        - containerPort: 8080
+
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js"]

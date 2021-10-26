@@ -21,6 +21,5 @@
 
     <modules>
         <module>SpringReactiveWebApp</module>
-        <module>SpringReactiveWebClient</module>
     </modules>
 </project>

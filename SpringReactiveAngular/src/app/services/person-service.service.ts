@@ -42,11 +42,13 @@ export class PersonServiceService {
 
   //  Non blocking API
   observePersons1(url: string): Observable<any> {
+    console.log("!!!!!!!!!!!!!!!!!!Calling Observable method!!!!!!!!!!!!!!!!!!!");
     return new Observable<any>(obs => {
+      console.log("!!!!!!!!Calling backend url!!!!!!!!!" + url);
       const es = new EventSource(url);
       
       es.addEventListener('periodic-event', (evt: any) => {
-        //console.log(evt.data);
+        console.log(evt.data);
         obs.next(evt.data != null ? JSON.parse(evt.data) : evt.data);
       });
 
