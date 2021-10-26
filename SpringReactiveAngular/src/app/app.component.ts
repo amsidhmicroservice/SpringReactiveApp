@@ -31,6 +31,10 @@ export class AppComponent {
 
     console.log("Environment Name is " + this.environmentName);
     console.log("BackEnd API is is " + this.apiBackEndUrl);
+    console.log("personEventUrl " + this.personEventUrl);
+    console.log("personUrl " + this.personUrl);
+    console.log("personStreamUrl1 " + this.personStreamUrl1);
+    console.log("personStreamUrl2 " + this.personStreamUrl2);
 
     //this.getPersonList();
     this.observePersons1();
@@ -54,11 +58,13 @@ export class AppComponent {
   }
 
   observePersons1() {
+    console.log("Calling PersonService method of observePersons1");
     this.personServiceService.observePersons1(this.personStreamUrl1)
       .subscribe((person: Person) => {
         console.log(person);
         this.persons.push(person);
       });
+    console.log("End of calling PersonService method of observePersons1");  
   }
 
   observePersons2() {

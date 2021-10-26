@@ -1,0 +1,31 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: spring-angular-virutal-service
+  labels:
+    app.kubernetes.io/name: spring-angular-virutal-service
+    app.kubernetes.io/component: virtual-service
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - spring-angular-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /persons
+      route:
+        - destination:
+            host: spring-backend-service
+            port:
+              number: 8282
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: angular-frontend-service
+            port:
+              number: 8181
+
+

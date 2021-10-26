@@ -1,0 +1,18 @@
+####################################################
+# OnlineShop Backend Service
+####################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-backend-service
+  labels:
+    app.kubernetes.io/name: spring-backend
+    app.kubernetes.io/component: spring
+spec:
+  selector:
+    app.kubernetes.io/name: spring-backend
+    app.kubernetes.io/component: spring
+  ports:
+    - name: http
+      port: 8282
+  type: LoadBalancer

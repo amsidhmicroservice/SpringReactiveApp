@@ -1,0 +1,19 @@
+####################################################
+# OnlineShop FrontEnd Service
+####################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular-frontend-service
+  labels:
+    app.kubernetes.io/name: angular-frontend
+    app.kubernetes.io/component: angular
+spec:
+  selector:
+    app.kubernetes.io/name: angular-frontend
+    app.kubernetes.io/component: angular
+  ports:
+    - name: http
+      port: 8181
+      targetPort: 8080
+  type: NodePort

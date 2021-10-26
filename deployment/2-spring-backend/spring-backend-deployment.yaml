@@ -1,0 +1,40 @@
+####################################################
+#  Spring BackEnd Deployment
+####################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-backend-deployment
+  labels:
+    app.kubernetes.io/name: spring-backend
+    app.kubernetes.io/component: spring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spring-backend
+      app.kubernetes.io/component: spring
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spring-backend
+        app.kubernetes.io/component: spring
+    spec:
+      initContainers:
+        - name: init-mongo-db-ready
+          image: mongo:4.2
+          command: [ '/bin/sh', '-c' ]
+          args:
+            - echo "Waiting for mongodb at mongo-db-service:27017 to go live before the BE...";
+            - until (mongo --host mongo-db-service:27017 >/dev/null) do echo "Waiting for connection for 2 sec."; sleep 2; done
+      containers:
+        - name: spring-backend
+          image: amsidhmicroservice/springreactivewebapp:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8282
+              protocol: TCP
+          env:
+            - name: spring.data.mongodb.uri
+              value: mongodb://mongo-db-service:27017/PERSONDB
+      terminationGracePeriodSeconds: 30
